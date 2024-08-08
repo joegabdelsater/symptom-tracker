@@ -1,16 +1,26 @@
+import React, { useMemo } from 'react'
+import { IMeal, ISymptoms } from '../types/types'
+import MealItem from './MealItem'
+import SymptomsItem from './SymptomsItem'
 
-// const EntryItem = () => {
+interface EntryItemProps {
+    entry: IMeal | ISymptoms
+}
 
-//     if (entry.item_type === 'meal') {
-//         return (<MealItem meal={entry as IMeal} key={entry.id} />)
-//     }
-//     if (entry.item_type === 'symptoms') {
-//         return (<div className="flex gap-x-2 bg-purple-50 px-4 py-4 mb-4 shadow-lg rounded-md">
-//             {entry?.symptoms?.map((entry: ISymptom, index) => (
-//                 <SymptomSummaryItem symptom={entry as ISymptom} key={'symptom_' + index.toString() + '_' + entry.id.toString()} />
-//             ))}
-//         </div>)
-//     }
+const EntryItem: React.FC<EntryItemProps> = ({ entry }) => {
 
-//     return null
-// }
+    const EntryComponent: React.ReactNode = useMemo(() => {
+        if (entry.item_type === 'meal') {
+            return (<MealItem meal={entry as IMeal} />)
+        }
+        if (entry.item_type === 'symptoms') {
+            return (<SymptomsItem entry={entry as ISymptoms} />)
+        }
+        return null;
+    }, [entry])
+
+    return EntryComponent
+
+}
+
+export default EntryItem

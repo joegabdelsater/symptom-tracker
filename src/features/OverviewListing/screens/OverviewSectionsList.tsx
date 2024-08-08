@@ -9,18 +9,19 @@ const entries: (IMeal | ISymptoms)[] = [
         type: 'Breakfast',
         name: 'Oatmeal',
         item_type: 'meal',
+        time: '8:00 AM',
         symptoms: [
-            {   
+            {
                 id: 1,
                 name: 'Difficulty swallowing',
                 severity: 1
             },
-            {   
+            {
                 id: 2,
                 name: 'Chest Burn',
                 severity: 2
             },
-            {   
+            {
                 id: 3,
                 name: 'Food Stuck',
                 severity: 3
@@ -40,8 +41,9 @@ const entries: (IMeal | ISymptoms)[] = [
     {
         id: '2',
         item_type: 'symptoms',
+        time: '10:00 AM',
         symptoms: [
-            {   
+            {
                 id: 1,
                 name: 'Difficulty swallowing',
                 severity: 1
@@ -73,6 +75,7 @@ const entries: (IMeal | ISymptoms)[] = [
         type: 'Lunch',
         name: 'Oatmeal',
         item_type: 'meal',
+        time: '1:00 PM',
     }
 ]
 
