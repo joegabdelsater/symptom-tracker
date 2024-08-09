@@ -32,7 +32,7 @@ export const BottomTabBarLayout: React.FC<BottomTabBarLayoutProps> = ({ children
                 {children}
             </div>
 
-            <div className={`fixed left-0 right-0 bottom-0 z-10 bg-white justify-center items-center flex flex-col py-6 rounded-t-3xl drop-shadown-lg bottom-sheet ${isOpen ? 'open' : 'closed'}`}>
+            <div className={`fixed left-0 right-0 bottom-0 z-10 bg-slate-100 justify-start items-center flex flex-col rounded-t-3xl drop-shadown-lg bottom-sheet ${isOpen ? 'open' : 'closed'}`}>
                 <div className="absolute top-5 right-10" onClick={toggleBottomSheet}>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={3} stroke="currentColor"
                         className="size-6 text-indigo-500">
@@ -93,8 +93,6 @@ export const BottomTabBarLayout: React.FC<BottomTabBarLayoutProps> = ({ children
                     </nav>
                 </div>
             </div>
-
-
         </div>
     )
 }

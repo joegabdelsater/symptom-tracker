@@ -15,7 +15,8 @@
 }
 
 .bottom-sheet.open {
-  height: 300px;
+  padding-top: 3.4rem;
+  height: 270px;
 }
 
 .bottom-sheet.closed {
@@ -23,9 +24,6 @@
   height: 0;
 }
 
-.sheet-content {
-  padding: 20px;
-}
 
 .customDatePickerWidth,
 .customDatePickerWidth>div.react-datepicker-wrapper,
