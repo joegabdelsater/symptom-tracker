@@ -85,29 +85,18 @@ const data = [
     {
         date: 'Today',
         entries: entries
-    },
-    {
-        date: 'Yesterday',
-        entries: entries
-    },
-    {
-        date: '10/10/2024',
-        entries: entries
-    },
+    }
 ]
 
-const OverviewSectionsList: React.FC = () => {
+const TodayScreen: React.FC = () => {
     return (
         <BottomTabBarLayout>
-            {data.map((section, index) => {
-                return (
-                    <div className="mb-12" key={section + index.toString()} >
-                        <SectionList entries={section.entries} date={section.date} />
-                        <div className='border-t-2 border-gray-100 rounded w-1/2 m-auto'></div>
-                    </div>
-                )
-            })}
+            <div className="mb-12">
+                <SectionList entries={data[0].entries} date={data[0].date} />
+                <div className='border-t-2 border-gray-100 rounded w-1/2 m-auto'></div>
+            </div>
+
         </BottomTabBarLayout>)
 }
 
-export default OverviewSectionsList
+export default TodayScreen

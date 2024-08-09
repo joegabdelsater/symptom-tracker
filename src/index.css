@@ -1,3 +1,34 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.bottom-sheet {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 0;
+  overflow: hidden;
+  background-color: white;
+  box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.2);
+  transition: height 0.2s ease-out;
+}
+
+.bottom-sheet.open {
+  height: 300px;
+}
+
+.bottom-sheet.closed {
+  padding: 0px;
+  height: 0;
+}
+
+.sheet-content {
+  padding: 20px;
+}
+
+.customDatePickerWidth,
+.customDatePickerWidth>div.react-datepicker-wrapper,
+.customDatePickerWidth>div>div.react-datepicker__input-container .customDatePickerWidth>div>div.react-datepicker__input-container input {
+  width: 100%;
+}
