@@ -100,7 +100,7 @@ const data = [
 
 const OverviewSectionsList: React.FC = () => {
     const [startDate, setStartDate] = useState(new Date());
-    const [endDate, setEndDate] = useState(null);
+    const [endDate, setEndDate] = useState(new Date());
     const [showFilters, setShowFilters] = useState(false)
 
     const onChange = (dates: any) => {
