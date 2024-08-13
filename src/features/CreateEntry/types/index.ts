@@ -4,7 +4,7 @@ export interface ICoreData {
 }
 
 export interface ICreatableOption {
-    value: number;
+    value: number | string;
     label: string;
 }
 

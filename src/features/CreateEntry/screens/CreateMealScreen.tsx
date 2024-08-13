@@ -10,19 +10,44 @@ import { ICreatableOption, ISymptom } from '../types';
 import { MultiValue, SingleValue } from 'react-select';
 import { useNavigate } from 'react-router-dom';
 import { IAddMealEntryProps } from '../../OverviewListing/types/types';
+import Select from 'react-select';
 
 interface IForm {
     meal: SingleValue<ICreatableOption> | undefined;
+    type: SingleValue<ICreatableOption> | undefined;
     ingredients: MultiValue<ICreatableOption>;
     date: Date;
     symptoms: MultiValue<ISymptom>;
 }
+
+const mealTypes = [
+    {
+        value: 'breakfast',
+        label: 'Breakfast',
+    },
+    {
+        value: 'lunch',
+        label: 'Lunch',
+    },
+    {
+        value: 'dinner',
+        label: 'Dinner',
+    },
+    {
+        value: 'snack',
+        label: 'Snack',
+    },
+]
 const CreateMealScreen = () => {
     const navigate = useNavigate();
     const queryClient = useQueryClient();
 
     const [form, setform] = useState<IForm>({
         meal: null,
+        type: {
+            value: 'breakfast',
+            label: 'Breakfast',
+        },
         ingredients: [],
         date: new Date(),
         symptoms: [],
@@ -131,7 +156,7 @@ const CreateMealScreen = () => {
             // TODO show error
             return
         }
-        const mealId = form.meal.value;
+        const mealId = form.meal.value as number;
         createIngredient({ name, mealId });
     }
 
@@ -162,12 +187,13 @@ const CreateMealScreen = () => {
         }
 
         const data: IAddMealEntryProps = {
-            meal: form.meal?.value,
-            ingredients: form.ingredients.map((ingredient) => ingredient.value),
+            meal: form.meal?.value as number,
+            type: form.type?.value as string,
+            ingredients: form.ingredients.map((ingredient) => ingredient.value as number,),
             date: dateString,
             time: timeString,
             symptoms: form.symptoms.map((symptom) => ({
-                symptomId: symptom.value,
+                symptomId: symptom.value as number,
                 severity: symptom.severity,
             })),
         }
@@ -187,7 +213,7 @@ const CreateMealScreen = () => {
                         marks
                         value={symptom?.severity || 1}
                         markClassName="bg-green-200 h-2 text-lg"
-                        onChange={(value) => { setSeverity(value, symptom.value); }}
+                        onChange={(value) => { setSeverity(value, symptom.value as number); }}
                         min={0}
                         max={5}
                         thumbClassName="bg-indigo-600 rounded-full h-7 w-7 justify-center items-center flex lowerIndex"
@@ -219,11 +245,22 @@ const CreateMealScreen = () => {
             <h1 className='font-bold text-xl mb-4'>Add a meal to your day</h1>
 
             <div className="mb-4">
+                <p className="mb-2">Meal Type:</p>
+                <Select
+                    value={form?.type}
+                    options={mealTypes}
+                    className='z-40'
+                    onChange={(option: SingleValue<ICreatableOption>) => {
+                        handleForm('type', option);
+                    }}
+                />
+            </div>
+
+            <div className="mb-4">
                 <p className="mb-2">Meal name:</p>
                 <CreatableSelect
                     value={form?.meal}
                     options={mealsData}
-                    className='z-40'
                     onCreateOption={(text) => {
                         createMeal(text);
                     }}
@@ -274,7 +311,7 @@ const CreateMealScreen = () => {
                         onCreateOption={createSymptom}
                         onChange={(option: MultiValue<ICreatableOption>) => {
                             handleForm('symptoms', option);
-                            setSeverity(1, option[option.length - 1].value);
+                            setSeverity(1, option[option.length - 1].value as number);
                         }}
                     />
                 </div>

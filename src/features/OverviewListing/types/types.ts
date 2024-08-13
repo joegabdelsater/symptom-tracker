@@ -1,16 +1,26 @@
+export interface IEntry {
+    id: string
+    entry: IMeal | ISymptoms
+    time: string
+    date: string
+}
+
 export interface IMeal {
     id: string
-    item_type: string
+    entry: string
     type: string
     name: string
-    time: string,
-    symptoms?: ISymptom[]
+    symptoms: ISymptoms
+    ingredients: IIngredient[]
+}
+
+export interface IIngredient { 
+    id: number,
+    name: string
 }
 
 export interface ISymptoms {
-    id: string,
-    time: string,
-    item_type: string
+    entry: string
     symptoms: ISymptom[]
 }
 
@@ -23,6 +33,7 @@ export interface ISymptom {
 
 export interface IAddMealEntryProps {
     meal: number;
+    type: string;
     ingredients: number[];
     date: string;
     time: string;
