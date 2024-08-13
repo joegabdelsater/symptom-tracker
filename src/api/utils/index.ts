@@ -15,40 +15,46 @@ interface ICallParams {
 
 let token: string | null = null;
 
-// export const prepareHeaders = async (authenticate = false) => {
+export const prepareHeaders = async () => {
 
 
-//     const storeToken = state.auth.token
+    // const storeToken = state.auth.token
 
-//     const headers = new Headers();
+    const headers = new Headers();
 
-//     headers.set('Content-Type', 'application/json');
-//     headers.set('Accept', 'application/json');
+    headers.set('Content-Type', 'application/json');
+    headers.set('Accept', 'application/json');
+    headers.set('Origin', 'http://localhost:5173');
+    // if (authenticate) {
+    //     if (storeToken === null && token === null) {
+    //         token = await AsyncStorage.getItem('token');
+    //     }
 
-//     if (authenticate) {
-//         if (storeToken === null && token === null) {
-//             token = await AsyncStorage.getItem('token');
-//         }
+    //     token = storeToken || token;
 
-//         token = storeToken || token;
+    //     if (token) {
+    //         headers.set('authorization', `Bearer ${token}`);
+    //     }
+    //     return headers
+    // }
 
-//         if (token) {
-//             headers.set('authorization', `Bearer ${token}`);
-//         }
-//         return headers
-//     }
-// }
+    return headers;
+}
 
 export const call = async (params: ICallParams) => {
-    const { url, params: { method, body }, authenticate } = params;
+    const { url, params: { method, body } } = params;
 
-    // const headers = await prepareHeaders(authenticate);
+    const headers = await prepareHeaders();
 
     const res = await fetch(`${BASE_URL}${url}`, {
         method: method || 'GET',
-        body,
-        // headers
+        body: body ? JSON.stringify(body) : null,
+        headers
     });
 
+    console.log(res);
+    if (res.status !== 200) {
+        throw new Error(res.statusText);
+    }
     return res.json();
 }

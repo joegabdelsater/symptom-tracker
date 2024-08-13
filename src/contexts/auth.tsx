@@ -1,32 +1,41 @@
 import React, { createContext, useContext, useState } from 'react';
+import { useLocalStorage } from '../hooks/useLocalStorage';
+import { useNavigate } from "react-router-dom";
 
 interface authContext {
     token: string | null;
-    login: (userData: any) => void;
+    setToken: (token: string) => void;
     logout: () => void;
+
 }
 const AuthContext = createContext<authContext>({
     token: null,
-    login: (token) => { },
+    setToken: (token: string) => { },
     logout: () => { },
 });
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-    const [token, setToken] = useState<string | null>(null);
-
+    const navigate = useNavigate();
+    const [token, setToken] = useLocalStorage("token", null);
+    
     const login = (token: string | null) => {
         if (!token) return;
 
         setToken(token);
-        localStorage.setItem('token', token);
+        navigate("/today", { replace: true });
     };
 
     const logout = () => {
         setToken(null);
-        localStorage.removeItem('token');
+        navigate("/login", { replace: true });
     };
 
-    return (<AuthContext.Provider value={{ token, login, logout }}>
+
+    return (<AuthContext.Provider value={{
+        token,
+        setToken: login,
+        logout,
+    }}>
         {children}
     </AuthContext.Provider>
     );
