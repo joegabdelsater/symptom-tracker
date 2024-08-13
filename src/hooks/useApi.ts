@@ -1,4 +1,4 @@
-import { useQuery, UseQueryOptions, useMutation, UseMutationOptions } from "@tanstack/react-query";
+import { useQuery, UseQueryOptions,  } from "@tanstack/react-query";
 import { useAuth } from "../contexts/auth";
 
 export function useApi<TQueryKey extends [string, Record<string, unknown>?], TQueryFnData, TError, TData = TQueryFnData>(
@@ -9,10 +9,9 @@ export function useApi<TQueryKey extends [string, Record<string, unknown>?], TQu
         "queryKey" | "queryFn"
     >
 ) {
-    const { getToken } = useAuth();
+    const { token } = useAuth();
 
     const callback = async () => {
-        const token = await getToken();
         return fetcher(queryKey[1], token ?? "");
     }
     return useQuery({
@@ -23,16 +22,3 @@ export function useApi<TQueryKey extends [string, Record<string, unknown>?], TQu
 }
 
 
-export function useApiMutation<TData, TError, TVariables>(
-    mutationFn: (variables: TVariables, token: string) => Promise<TData>,
-    options?: Omit<UseMutationOptions<TData, TError, TVariables>, 'mutationFn'>
-) {
-    const { getToken } = useAuth();
-
-    const mutation = async (variables: TVariables) => {
-        const token = await getToken();
-        return mutationFn(variables, token ?? '');
-    };
-
-    return useMutation(mutation, options);
-}

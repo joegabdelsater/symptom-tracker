@@ -25,3 +25,15 @@ export const useLocalStorage = (keyName: string, defaultValue: any) => {
     };
     return [storedValue, setValue];
 };
+
+export const getToken = () => {
+    try {
+        const value = window.localStorage.getItem('token');
+        if (value) {
+            return JSON.parse(value);
+        }
+        return null;
+    } catch (err) {
+        return null;
+    }
+}

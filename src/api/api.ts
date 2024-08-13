@@ -1,5 +1,20 @@
 import { call } from './utils';
 
+interface IAddMealEntryProps {
+    meal: number;
+    ingredients: number[];
+    date: string;
+    time: string;
+    symptoms: { symptomId: number, severity: number }[];
+}
+
+
+interface IAddSymptomsEntryProps {
+    date: string;
+    time: string;
+    symptoms: { symptomId: number, severity: number }[];
+}
+
 export const login = async (data: { email: string, password: string }) => {
     return call({
         url: 'auth/login',
@@ -11,7 +26,19 @@ export const login = async (data: { email: string, password: string }) => {
     });
 }
 
+export const getCore = async () => {
+    return call({
+        url: 'core',
+        params: {
+            method: 'GET',
+            body: null,
+        },
+        authenticate: false,
+    });
+}
+
 export const getTodayEntries = async () => {
+
     return call({
         url: 'entries',
         params: {
@@ -33,7 +60,46 @@ export const getEntriesByDate = async (min: string, max: string) => {
     });
 }
 
-export const addMealEntry = async (data: any) => {
+export const addMeal = async (name: string) => {
+    return call({
+        url: 'meal',
+        params: {
+            method: 'POST',
+            body: {
+                name
+            },
+        },
+        authenticate: false,
+    });
+}
+
+export const addIngredient = async (name: string, mealId: number) => {
+    return call({
+        url: `ingredient/${mealId}`,
+        params: {
+            method: 'POST',
+            body: {
+                ingredient: name
+            },
+        },
+        authenticate: false,
+    });
+}
+
+export const addSymptom = async (name: string) => {
+    return call({
+        url: 'symptom',
+        params: {
+            method: 'POST',
+            body: {
+                name
+            },
+        },
+        authenticate: false,
+    });
+}
+
+export const addMealEntry = async (data: IAddMealEntryProps) => {
     return call({
         url: 'entries/meal',
         params: {
@@ -44,7 +110,8 @@ export const addMealEntry = async (data: any) => {
     });
 }
 
-export const addSymptomsEntry = async (data: any) => {
+
+export const addSymptomsEntry = async (data: IAddSymptomsEntryProps) => {
     return call({
         url: 'entries/symptoms',
         params: {

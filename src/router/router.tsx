@@ -8,16 +8,6 @@ import { useAuth } from "../contexts/auth";
 import { Navigate } from "react-router-dom";
 import { Routes, Route } from "react-router-dom";
 
-export const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
-    const { token } = useAuth();
-
-    // if (!token) {
-    //     return <Navigate to="/login" />;
-    // }
-
-    return children;
-};
-
 
 const AppRouter = () => {
     const { token } = useAuth();

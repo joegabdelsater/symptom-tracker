@@ -1,6 +1,6 @@
 import { QueryClient } from '@tanstack/react-query';
 import { BASE_URL } from '../constants/urls';
-
+import { getToken } from '../../hooks/useLocalStorage';
 const queryClient = new QueryClient();
 export { queryClient };
 
@@ -13,30 +13,20 @@ interface ICallParams {
     authenticate: boolean;
 }
 
-let token: string | null = null;
+let tokenVar: string | null = null;
+
 
 export const prepareHeaders = async () => {
 
-
-    // const storeToken = state.auth.token
-
     const headers = new Headers();
-
+    const token = tokenVar || getToken();
     headers.set('Content-Type', 'application/json');
     headers.set('Accept', 'application/json');
     headers.set('Origin', 'http://localhost:5173');
-    // if (authenticate) {
-    //     if (storeToken === null && token === null) {
-    //         token = await AsyncStorage.getItem('token');
-    //     }
 
-    //     token = storeToken || token;
-
-    //     if (token) {
-    //         headers.set('authorization', `Bearer ${token}`);
-    //     }
-    //     return headers
-    // }
+    if (token) {
+        headers.set('authorization', `Bearer ${token}`);
+    }
 
     return headers;
 }
@@ -52,7 +42,6 @@ export const call = async (params: ICallParams) => {
         headers
     });
 
-    console.log(res);
     if (res.status !== 200) {
         throw new Error(res.statusText);
     }
