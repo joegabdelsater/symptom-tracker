@@ -1,19 +1,6 @@
 import { call } from './utils';
+import { IAddMealEntryProps, IAddSymptomsEntryProps } from '../features/OverviewListing/types/types';
 
-interface IAddMealEntryProps {
-    meal: number;
-    ingredients: number[];
-    date: string;
-    time: string;
-    symptoms: { symptomId: number, severity: number }[];
-}
-
-
-interface IAddSymptomsEntryProps {
-    date: string;
-    time: string;
-    symptoms: { symptomId: number, severity: number }[];
-}
 
 export const login = async (data: { email: string, password: string }) => {
     return call({

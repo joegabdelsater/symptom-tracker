@@ -15,10 +15,23 @@ export interface ISymptoms {
 }
 
 
-
 export interface ISymptom {
     id: number,
     name: string
     severity: number
 }
 
+export interface IAddMealEntryProps {
+    meal: number;
+    ingredients: number[];
+    date: string;
+    time: string;
+    symptoms: { symptomId: number, severity: number }[];
+}
+
+
+export interface IAddSymptomsEntryProps {
+    date: string;
+    time: string;
+    symptoms: { symptomId: number, severity: number }[];
+}

@@ -1,4 +1,4 @@
-import React, { MouseEventHandler, useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import CreatableSelect from 'react-select/creatable';
 import BottomTabBarLayout from '../../../components/BottomTabBarLayout';
 import DatePicker from "react-datepicker";
@@ -9,6 +9,7 @@ import { getCore, addMeal, addIngredient, addSymptom, addMealEntry } from '../..
 import { ICreatableOption, ISymptom } from '../types';
 import { MultiValue, SingleValue } from 'react-select';
 import { useNavigate } from 'react-router-dom';
+import { IAddMealEntryProps } from '../../OverviewListing/types/types';
 
 interface IForm {
     meal: SingleValue<ICreatableOption> | undefined;
@@ -155,8 +156,13 @@ const CreateMealScreen = () => {
         const dateString = form.date.toISOString().split('T')[0]; // YYYY-MM-DD format
         const timeString = form.date.toTimeString().split(' ')[0].slice(0, 5); // HH:mm format
 
-        const data = {
-            mealId: form.meal?.value,
+        if (!form.meal || !form.ingredients.length || !form.date) {
+            // TODO show error
+            return
+        }
+
+        const data: IAddMealEntryProps = {
+            meal: form.meal?.value,
             ingredients: form.ingredients.map((ingredient) => ingredient.value),
             date: dateString,
             time: timeString,
@@ -166,10 +172,7 @@ const CreateMealScreen = () => {
             })),
         }
 
-        if (!data.mealId || !data.ingredients.length || !data.date || !data.time) {
-            // TODO show error
-            return
-        }
+
 
         apiAddMealEntry(data);
     }
@@ -271,6 +274,7 @@ const CreateMealScreen = () => {
                         onCreateOption={createSymptom}
                         onChange={(option: MultiValue<ICreatableOption>) => {
                             handleForm('symptoms', option);
+                            setSeverity(1, option[option.length - 1].value);
                         }}
                     />
                 </div>

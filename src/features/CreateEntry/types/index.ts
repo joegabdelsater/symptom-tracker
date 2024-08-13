@@ -9,5 +9,5 @@ export interface ICreatableOption {
 }
 
 export interface ISymptom extends ICreatableOption {
-    severity: number | null;
+    severity: number ;
 }

@@ -20,7 +20,6 @@ interface IForm {
 const CreateSymptomsScreen = () => {
     const navigate = useNavigate();
     const queryClient = useQueryClient();
-    const [startDate, setStartDate] = useState(new Date());
     const [form, setform] = useState<IForm>({
         date: new Date(),
         symptoms: [],
@@ -40,6 +39,7 @@ const CreateSymptomsScreen = () => {
     }, [data]);
 
     const setSeverity = (value: number, symptomId: number) => {
+        console.log(value, symptomId);
         setform((prev) => ({
             ...prev,
             symptoms: prev.symptoms.map((symptom) => {
@@ -184,6 +184,7 @@ const CreateSymptomsScreen = () => {
                         onCreateOption={createSymptom}
                         onChange={(option: MultiValue<ICreatableOption>) => {
                             handleForm('symptoms', option);
+                            setSeverity(1, option[option.length - 1].value);
                         }}
                     />
                 </div>
