@@ -27,7 +27,7 @@ export const BottomTabBarLayout: React.FC<BottomTabBarLayoutProps> = ({ children
     }, [])
 
     return (
-        <div className="h-screen relative">
+        <div className="h-screen relative font-display">
             <div className="h-full overflow-scroll px-4 pt-6 pb-32 bg-slate-100">
                 {children}
             </div>

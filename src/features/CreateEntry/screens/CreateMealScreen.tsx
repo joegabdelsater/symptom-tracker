@@ -245,7 +245,7 @@ const CreateMealScreen = () => {
             <h1 className='font-bold text-xl mb-4'>Add a meal to your day</h1>
 
             <div className="mb-4">
-                <p className="mb-2">Meal Type:</p>
+                <p className="mb-2 text-md">Meal Type:</p>
                 <Select
                     value={form?.type}
                     options={mealTypes}
