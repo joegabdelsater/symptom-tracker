@@ -57,7 +57,7 @@ const CreateMealScreen = () => {
         mutationFn: (data: any) => addMealEntry(data),
         onSuccess: () => {
             console.log('success');
-            navigate("/today");
+            navigate("/symptom-tracker/today");
         },
     })
 
