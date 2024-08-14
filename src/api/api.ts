@@ -25,7 +25,6 @@ export const getCore = async () => {
 }
 
 export const getTodayEntries = async () => {
-
     return call({
         url: 'entries',
         params: {
@@ -36,12 +35,28 @@ export const getTodayEntries = async () => {
     });
 }
 
-export const getEntriesByDate = async (min: string, max: string) => {
+export const getEntriesByDate = async (body: { from: Date, to: Date } | null) => {
+    let queryParams = [];
+    let queryString: string = '';
+    if (body) {
+        if (body.from) {
+            queryParams.push(`from=${body.from.toISOString()}`);
+        }
+
+        if (body.to) {
+            queryParams.push(`to=${body.to.toISOString()}`);
+        }
+    }
+
+    if (queryParams.length > 0) {
+        queryString = `?${queryParams.join('&')}`;
+    }
+
     return call({
-        url: 'entries',
+        url: `entries/all${queryString}`,
         params: {
             method: 'GET',
-            body: { min, max },
+            body: null,
         },
         authenticate: false,
     });
@@ -62,7 +77,7 @@ export const addMeal = async (name: string) => {
 
 export const addIngredient = async (name: string, mealId: number) => {
     return call({
-        url: `ingredient/${mealId}`,
+        url: `ingredient / ${mealId} `,
         params: {
             method: 'POST',
             body: {

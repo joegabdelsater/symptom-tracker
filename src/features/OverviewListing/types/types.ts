@@ -1,27 +1,38 @@
+export interface IDay {
+    id: number,
+    date: string,
+    entries: IMealEntry[] | ISymptomsEntry[]
+}
 export interface IEntry {
     id: string
-    entry: IMeal | ISymptoms
     time: string
-    date: string
+    type: string
+    entry: IMeal | ISymptom[]
 }
+
+
+export interface IEntrySkeleton<T> {
+    id: string
+    time: string
+    type: string
+    entry: T
+}
+
+export interface IMealEntry extends IEntrySkeleton<IMeal>{}
+export interface ISymptomsEntry extends IEntrySkeleton<ISymptom[]>{}
+
 
 export interface IMeal {
     id: string
-    entry: string
     type: string
     name: string
-    symptoms: ISymptoms
+    symptoms: ISymptom[]
     ingredients: IIngredient[]
 }
 
-export interface IIngredient { 
+export interface IIngredient {
     id: number,
     name: string
-}
-
-export interface ISymptoms {
-    entry: string
-    symptoms: ISymptom[]
 }
 
 

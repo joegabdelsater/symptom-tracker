@@ -1,28 +1,26 @@
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/20/solid'
 import React, { useMemo } from 'react'
-import { IEntry, IMeal } from '../types/types'
+import { IMealEntry } from '../types/types'
 import SymptomSummaryItem from './SymptomSummaryItem'
+import SymptomsItem from './SymptomsItem'
 
 interface MealItemProp {
-    meal: IEntry
+    meal: IMealEntry
 }
 const MealItem: React.FC<MealItemProp> = ({ meal }) => {
     const [open, setOpen] = React.useState(false)
-
 
     const toggleOpen = () => {
         setOpen(!open)
     }
     const mealDetails = useMemo(() => {
-        const entry: IMeal = meal.entry as IMeal
-
         return {
             time: meal.time,
-            type: entry.type,
-            name: entry.name,
-            ingredients: entry.ingredients,
-            symptoms: entry.symptoms.symptoms
+            type: meal.entry.type,
+            name: meal.entry.name,
+            ingredients: meal.entry.ingredients,
+            symptoms: meal.entry.symptoms
         }
     }, [meal])
 
@@ -30,11 +28,17 @@ const MealItem: React.FC<MealItemProp> = ({ meal }) => {
 
     return (
         <li className=" shadow-lg rounded-md mb-4 bg-slate-50">
+
             <div className="w-full bg-white px-4 py-1 rounded-t-md mb-4">
                 <p className="text-center text-xs leading-5 text-gray-500">
                     At {mealDetails.time}
                 </p>
             </div>
+
+            {mealDetails.symptoms && <div className="px-4">
+                <SymptomsItem symptoms={mealDetails.symptoms} />
+            </div>}
+
 
             <div className="flex justify-between gap-x-6 px-4 pb-4">
                 <div className="flex min-w-0 gap-x-4">
@@ -48,11 +52,12 @@ const MealItem: React.FC<MealItemProp> = ({ meal }) => {
                     </div>
                 </div>
 
-                {mealDetails.symptoms && <div className="flex gap-x-2 gap-y-2 flex-wrap items-center">
+                {/* {mealDetails.symptoms && <div className="flex gap-x-2 gap-y-2 flex-wrap items-center">
                     {mealDetails.symptoms.map((symptom, index) => (
                         <SymptomSummaryItem key={index} symptom={symptom} />
                     ))}
-                </div>}
+                </div>} */}
+
 
 
                 {mealDetails?.symptoms?.length === 0 || !mealDetails.symptoms && (
@@ -97,6 +102,8 @@ const MealItem: React.FC<MealItemProp> = ({ meal }) => {
                     ))}
                 </ul>
             </div>}
+
+
 
         </li >
     )

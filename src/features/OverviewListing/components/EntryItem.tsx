@@ -1,25 +1,24 @@
 import React, { useMemo } from 'react'
-import { IEntry } from '../types/types'
+import { IMealEntry, ISymptom, ISymptomsEntry } from '../types/types'
 import MealItem from './MealItem'
 import SymptomsItem from './SymptomsItem'
 
 interface EntryItemProps {
-    entry: IEntry
+    entry: IMealEntry | ISymptomsEntry
 }
 
 const EntryItem: React.FC<EntryItemProps> = ({ entry }) => {
-    const entryType = entry.entry.entry;
 
     const EntryComponent: React.ReactNode = useMemo(() => {
 
-        if (entryType === 'meal') {
-            return (<MealItem meal={entry} />)
+        if (entry.type === 'meal') {
+            return (<MealItem meal={entry as IMealEntry} />)
         }
-        if (entryType === 'symptoms') {
-            return (<SymptomsItem entry={entry} />)
+        if (entry.type === 'symptoms') {
+            return (<SymptomsItem symptoms={entry.entry as ISymptom[]} time={entry.time} />)
         }
         return null;
-    }, [entryType, entry])
+    }, [entry])
 
     return EntryComponent
 

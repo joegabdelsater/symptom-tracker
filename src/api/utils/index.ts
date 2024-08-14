@@ -33,7 +33,6 @@ export const prepareHeaders = async () => {
 
 export const call = async (params: ICallParams) => {
     const { url, params: { method, body } } = params;
-
     const headers = await prepareHeaders();
 
     const res = await fetch(`${BASE_URL}${url}`, {

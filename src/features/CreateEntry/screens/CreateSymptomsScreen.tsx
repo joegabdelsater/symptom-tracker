@@ -120,7 +120,7 @@ const CreateSymptomsScreen = () => {
                         marks
                         value={symptom?.severity || 1}
                         markClassName="bg-green-200 h-2 text-lg"
-                        onChange={(value) => { setSeverity(value, symptom.value); }}
+                        onChange={(value) => { setSeverity(value, symptom.value as number); }}
                         min={0}
                         max={5}
                         thumbClassName="bg-indigo-600 rounded-full h-7 w-7 justify-center items-center flex lowerIndex"
@@ -184,7 +184,7 @@ const CreateSymptomsScreen = () => {
                         onCreateOption={createSymptom}
                         onChange={(option: MultiValue<ICreatableOption>) => {
                             handleForm('symptoms', option);
-                            setSeverity(1, option[option.length - 1].value);
+                            setSeverity(1, option[option.length - 1].value as number);
                         }}
                     />
                 </div>

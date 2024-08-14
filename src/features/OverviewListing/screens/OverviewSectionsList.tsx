@@ -1,112 +1,56 @@
-import React, { useState } from 'react'
+import React, { MouseEventHandler, useState } from 'react'
 import BottomTabBarLayout from '../../../components/BottomTabBarLayout'
 import SectionList from '../components/SectionList'
-import { IMeal, ISymptoms } from '../types/types'
+import { IDay } from '../types/types'
 import DatePicker from 'react-datepicker'
 import "react-datepicker/dist/react-datepicker.css";
+import { useQuery, QueryClient } from '@tanstack/react-query'
+import { getEntriesByDate } from '../../../api/api'
 
-const entries: (IMeal | ISymptoms)[] = [
-    {
-        id: '1',
-        type: 'Breakfast',
-        name: 'Oatmeal',
-        item_type: 'meal',
-        time: '8:00 AM',
-        symptoms: [
-            {
-                id: 1,
-                name: 'Difficulty swallowing',
-                severity: 1
-            },
-            {
-                id: 2,
-                name: 'Chest Burn',
-                severity: 2
-            },
-            {
-                id: 3,
-                name: 'Food Stuck',
-                severity: 3
-            },
-            {
-                id: 4,
-                name: 'Food Stuck',
-                severity: 4
-            },
-            {
-                id: 5,
-                name: 'Food Stuck',
-                severity: 5
-            }
-        ]
-    },
-    {
-        id: '2',
-        item_type: 'symptoms',
-        time: '10:00 AM',
-        symptoms: [
-            {
-                id: 1,
-                name: 'Difficulty swallowing',
-                severity: 1
-            },
-            {
-                id: 2,
-                name: 'Chest Burn',
-                severity: 2
-            },
-            {
-                id: 3,
-                name: 'Food Stuck',
-                severity: 3
-            },
-            {
-                id: 4,
-                name: 'Food Stuck',
-                severity: 4
-            },
-            {
-                id: 5,
-                name: 'Food Stuck',
-                severity: 5
-            }
-        ]
-    },
-    {
-        id: '2',
-        type: 'Lunch',
-        name: 'Oatmeal',
-        item_type: 'meal',
-        time: '1:00 PM',
-    }
-]
-
-
-
-const data = [
-    {
-        date: 'Today',
-        entries: entries
-    },
-    {
-        date: 'Yesterday',
-        entries: entries
-    },
-    {
-        date: '10/10/2024',
-        entries: entries
-    },
-]
 
 const OverviewSectionsList: React.FC = () => {
-    const [startDate, setStartDate] = useState(new Date());
-    const [endDate, setEndDate] = useState(new Date());
+    const queryClient = new QueryClient()
+    const [dates, setDates] = useState({
+        from: null,
+        to: null
+    });
+
     const [showFilters, setShowFilters] = useState(false)
 
-    const onChange = (dates: any) => {
-        const [start, end] = dates;
-        setStartDate(start);
-        setEndDate(end);
+    const { data, isPending, isError } = useQuery({
+        queryKey: ['overview'],
+        queryFn: async () => {
+            let params = null;
+            if (dates.from) {
+                params = { from: dates.from }
+            }
+
+            if (dates.to) {
+                params = { ...params, to: dates.to }
+            }
+            return await getEntriesByDate(params as { from: Date, to: Date } | null)
+        }
+    })
+
+    const handleFilter = (event: React.MouseEvent<HTMLButtonElement>) => {
+
+        queryClient.invalidateQueries({ queryKey: ['overview'] })
+        event.preventDefault()
+        
+        // toggleFilters()
+    }
+
+    if (isPending || isError) return (
+        <BottomTabBarLayout>
+            <p>Loading...</p>
+        </BottomTabBarLayout>
+    )
+
+    const onChange = (date: Date | null, key: string) => {
+        setDates((prev) => ({
+            ...prev,
+            [key]: date
+        }));
     };
 
     const toggleFilters = () => {
@@ -138,14 +82,20 @@ const OverviewSectionsList: React.FC = () => {
                         calendarClassName='w-full z-40'
                         wrapperClassName='w-full z-40'
                         className='border border-gray-300 rounded-md p-2 w-full text-center z-40'
-                        selected={startDate}
-                        onChange={onChange}
-                        startDate={startDate}
-                        endDate={endDate}
-                        selectsRange
+                        selected={dates.from ?? new Date()}
+                        onChange={(date) => onChange(date, 'from')}
+                    />
+
+                    <DatePicker
+                        calendarClassName='w-full z-40'
+                        wrapperClassName='w-full z-40'
+                        className='border border-gray-300 rounded-md p-2 w-full text-center z-40'
+                        selected={dates.to ?? new Date()}
+                        onChange={(date) => onChange(date, 'to')}
                     />
 
                     <button
+                        onClick={handleFilter}
                         type="button"
                         className="mt-2 rounded-md bg-indigo-700 py-3 text-sm font-semibold text-white shadow-sm ring-1 ring-inset w-full"
                     >
@@ -155,11 +105,12 @@ const OverviewSectionsList: React.FC = () => {
             </div>}
 
 
-            {data.map((section, index) => {
+            {data.map((section: IDay, index: number) => {
                 return (
-                    <div className="mb-12" key={section + index.toString()} >
-                        <SectionList entries={section.entries} date={section.date} />
-                        <div className='border-t-2 border-gray-100 rounded w-1/2 m-auto'></div>
+                    <div className="mb-12" key={'day_' + index.toString()} >
+                        <SectionList day={section} />
+
+                        <div className='border-t-4 border-gray-300 rounded w-1/2 m-auto mt-8'></div>
                     </div>
                 )
             })}
