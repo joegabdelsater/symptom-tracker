@@ -22,12 +22,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         if (!token) return;
 
         setToken(token);
-        navigate("/symptom-tracker/today", { replace: true });
+        navigate("/today", { replace: true });
     };
 
     const logout = () => {
         setToken(null);
-        navigate("/symptom-tracker/login", { replace: true });
+        navigate("/login", { replace: true });
     };
 
 

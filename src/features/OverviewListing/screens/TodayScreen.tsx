@@ -16,14 +16,13 @@ const TodayScreen: React.FC = () => {
             <p>Loading...</p>
         </BottomTabBarLayout>
     )
+    
 
-
-    if(!data || data === null) return (  
+    if(Object.keys(data).length === 0 || data || data === null) return (
         <BottomTabBarLayout>
             <p className="font-sm text-center py-8">No data for today</p>
         </BottomTabBarLayout>
     )
-    
 
     return (
         <BottomTabBarLayout>

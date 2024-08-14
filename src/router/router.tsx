@@ -10,25 +10,24 @@ import { Routes, Route } from "react-router-dom";
 
 
 const AppRouter = () => {
-    console.log('yo router')
     const { token } = useAuth();
 
     const routes = useMemo(() => {
         if (token) {
             return (
                 <Routes>
-                    <Route path="/symptom-tracker/overview" element={<OverviewSectionsList />} />
-                    <Route path="/symptom-tracker/today" element={<TodayScreen />} />
-                    <Route path="/symptom-tracker/meal/create" element={<CreateMealScreen />} />
-                    <Route path="/symptom-tracker/symptoms/create" element={<CreateSymptomsScreen />} />
-                    <Route path="*" element={<Navigate to="/symptom-tracker/today" />} />
+                    <Route path="/today" element={<TodayScreen />} />
+                    <Route path="/overview" element={<OverviewSectionsList />} />
+                    <Route path="/meal/create" element={<CreateMealScreen />} />
+                    <Route path="/symptoms/create" element={<CreateSymptomsScreen />} />
+                    <Route path="*" element={<Navigate to="/today" />} />
                 </Routes>
             )
         }
         return (
             <Routes>
-                <Route path="*" element={<Navigate to="/symptom-tracker/login" />} />
-                <Route path="/symptom-tracker/login" element={<LoginScreen />} />
+                <Route path="/login" element={<LoginScreen />} />
+                <Route path="*" element={<Navigate to="/login" />} />
             </Routes>
         )
     }, [token])

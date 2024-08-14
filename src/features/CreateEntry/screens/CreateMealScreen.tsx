@@ -56,8 +56,7 @@ const CreateMealScreen = () => {
     const { mutate: apiAddMealEntry } = useMutation({
         mutationFn: (data: any) => addMealEntry(data),
         onSuccess: () => {
-            console.log('success');
-            navigate("/symptom-tracker/today");
+            navigate("/today");
         },
     })
 
