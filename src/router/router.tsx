@@ -10,6 +10,7 @@ import { Routes, Route } from "react-router-dom";
 
 
 const AppRouter = () => {
+    console.log('yo router')
     const { token } = useAuth();
 
     const routes = useMemo(() => {
