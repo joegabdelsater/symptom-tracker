@@ -22,7 +22,7 @@ export const prepareHeaders = async () => {
     const token = tokenVar || getToken();
     headers.set('Content-Type', 'application/json');
     headers.set('Accept', 'application/json');
-    headers.set('Origin', 'http://localhost:5173');
+    headers.set('Origin', 'https://joegabdelsater.github.io');
 
     if (token) {
         headers.set('authorization', `Bearer ${token}`);
