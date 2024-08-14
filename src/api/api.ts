@@ -40,11 +40,11 @@ export const getEntriesByDate = async (body: { from: Date, to: Date } | null) =>
     let queryString: string = '';
     if (body) {
         if (body.from) {
-            queryParams.push(`from=${body.from.toISOString()}`);
+            queryParams.push(`from=${body.from}`);
         }
 
         if (body.to) {
-            queryParams.push(`to=${body.to.toISOString()}`);
+            queryParams.push(`to=${body.to}`);
         }
     }
 

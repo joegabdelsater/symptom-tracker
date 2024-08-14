@@ -10,7 +10,7 @@ import { getEntriesByDate } from '../../../api/api'
 
 const OverviewSectionsList: React.FC = () => {
     const queryClient = new QueryClient()
-    const [dates, setDates] = useState({
+    const [dates, setDates] = useState<{ from: Date | null, to: Date | null }>({
         from: null,
         to: null
     });
@@ -18,26 +18,30 @@ const OverviewSectionsList: React.FC = () => {
     const [showFilters, setShowFilters] = useState(false)
 
     const { data, isPending, isError } = useQuery({
-        queryKey: ['overview'],
+        queryKey: ['overview', dates],
         queryFn: async () => {
             let params = null;
             if (dates.from) {
-                params = { from: dates.from }
+                const date = dates.from.toISOString().split('T')[0]; // YYYY-MM-DD format
+                console.log(date);
+                params = { from: date }
             }
 
             if (dates.to) {
-                params = { ...params, to: dates.to }
+                const date = dates.to.toISOString().split('T')[0]; // YYYY-MM-DD format
+                params = { ...params, to: date }
             }
             return await getEntriesByDate(params as { from: Date, to: Date } | null)
         }
     })
 
-    const handleFilter = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const handleClear = (event: React.MouseEvent<HTMLButtonElement>) => {
 
         queryClient.invalidateQueries({ queryKey: ['overview'] })
+        setDates({ from: null, to: null })
         event.preventDefault()
-        
-        // toggleFilters()
+
+        toggleFilters()
     }
 
     if (isPending || isError) return (
@@ -95,11 +99,11 @@ const OverviewSectionsList: React.FC = () => {
                     />
 
                     <button
-                        onClick={handleFilter}
+                        onClick={handleClear}
                         type="button"
                         className="mt-2 rounded-md bg-indigo-700 py-3 text-sm font-semibold text-white shadow-sm ring-1 ring-inset w-full"
                     >
-                        Filter
+                        Clear
                     </button>
                 </div>
             </div>}
