@@ -4,8 +4,9 @@ import react from '@vitejs/plugin-react'
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: 'symptom-tracker',
   plugins: [react(), VitePWA({
-    registerType: 'prompt',
+    registerType: 'autoUpdate',
     injectRegister: false,
 
     pwaAssets: {
@@ -14,8 +15,8 @@ export default defineConfig({
     },
 
     manifest: {
-      name: 'symptom-tracker',
-      short_name: 'symptom-tracker',
+      name: 'Symptom Tracker',
+      short_name: 'Symptom Tracker',
       description: 'A tool to help people find their allergy trigger foods and track their symptoms',
       theme_color: '#ffffff',
       icons: [

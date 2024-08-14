@@ -1,8 +1,9 @@
-import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
+import { Menu } from '@headlessui/react'
+// import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
+
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/20/solid'
 import React, { useMemo } from 'react'
 import { IMealEntry } from '../types/types'
-import SymptomSummaryItem from './SymptomSummaryItem'
 import SymptomsItem from './SymptomsItem'
 
 interface MealItemProp {

@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext } from 'react';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import { useNavigate } from "react-router-dom";
 
@@ -10,7 +10,7 @@ interface authContext {
 }
 const AuthContext = createContext<authContext>({
     token: null,
-    setToken: (token: string) => { },
+    setToken: () => { },
     logout: () => { },
 });
 

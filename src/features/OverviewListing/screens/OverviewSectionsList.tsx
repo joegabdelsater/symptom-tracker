@@ -1,4 +1,4 @@
-import React, { MouseEventHandler, useState } from 'react'
+import React, { useState } from 'react'
 import BottomTabBarLayout from '../../../components/BottomTabBarLayout'
 import SectionList from '../components/SectionList'
 import { IDay } from '../types/types'
