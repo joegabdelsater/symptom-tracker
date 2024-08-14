@@ -40,8 +40,8 @@ export const BottomTabBarLayout: React.FC<BottomTabBarLayoutProps> = ({ children
                     </svg>
                 </div>
 
-                <a href="/meal/create" className="block mb-4 text-white font-bold bg-green-300 px-8 py-2 rounded">Add Meal</a>
-                <a href="/symptoms/create" className="block mb-4 text-white font-bold bg-red-300 px-8 py-2 rounded">Add Symptom</a>
+                <a href="symptom-tracker/meal/create" className="block mb-4 text-white font-bold bg-green-300 px-8 py-2 rounded">Add Meal</a>
+                <a href="symptom-tracker/symptoms/create" className="block mb-4 text-white font-bold bg-red-300 px-8 py-2 rounded">Add Symptom</a>
             </div>
 
             <div className="absolute w-full bottom-0 border-t z-10 bg-white">

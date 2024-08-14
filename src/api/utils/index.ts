@@ -23,7 +23,7 @@ export const prepareHeaders = async () => {
     headers.set('Content-Type', 'application/json');
     headers.set('Accept', 'application/json');
     headers.set('Origin', 'https://joegabdelsater.github.io');
-    headers.set('Access-Control-Allow-Origin', 'https://joegabdelsater.github.io');
+    headers.set('Access-Control-Allow-Origin', '*');
 
     if (token) {
         headers.set('authorization', `Bearer ${token}`);

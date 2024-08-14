@@ -17,11 +17,13 @@ const TodayScreen: React.FC = () => {
         </BottomTabBarLayout>
     )
 
-    if(data.length === 0) return (  
+
+    if(!data) return (  
         <BottomTabBarLayout>
             <p className="font-sm text-center py-8">No data for today</p>
         </BottomTabBarLayout>
     )
+    
 
     return (
         <BottomTabBarLayout>
