@@ -18,7 +18,7 @@ const TodayScreen: React.FC = () => {
     )
 
 
-    if(!data) return (  
+    if(!data || data === null) return (  
         <BottomTabBarLayout>
             <p className="font-sm text-center py-8">No data for today</p>
         </BottomTabBarLayout>
